@@ -1,66 +1,206 @@
-## Foundry
+# Foundry Gold Token
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+A simple ERC20 token project built using Foundry, Anvil, and OpenZeppelin.
 
-Foundry consists of:
+This project demonstrates:
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+* ERC20 token creation
+* Owner-controlled minting
+* Burnable token functionality
+* ERC20 Permit (EIP-2612)
+* Local deployment using Anvil
+* Foundry testing setup
 
-## Documentation
+---
 
-https://book.getfoundry.sh/
+# Tech Stack
 
-## Usage
+* Solidity ^0.8.27
+* Foundry
+* Anvil
+* OpenZeppelin Contracts v5.x
 
-### Build
+---
 
-```shell
-$ forge build
+# Contract Features
+
+## Token Details
+
+* Name: Gold
+* Symbol: G
+* Decimals: 18
+
+## Functionalities
+
+### Owner-only Minting
+
+Only the contract owner can mint new tokens.
+
+```solidity
+function mint(address to, uint256 amount) public onlyOwner
 ```
 
-### Test
+### Burnable
 
-```shell
-$ forge test
+Token holders can burn their own tokens.
+
+### Permit Support
+
+Gasless approvals using ERC20 Permit (EIP-2612).
+
+### Initial Supply
+
+Initial supply is minted to the owner during deployment.
+
+```solidity
+1,000,000 tokens
 ```
 
-### Format
+---
 
-```shell
-$ forge fmt
+# Project Structure
+
+```text
+foundry-gold-token/
+├── src/
+│   └── Gold.sol
+├── script/
+│   └── DeployGold.s.sol
+├── test/
+│   └── GoldTest.t.sol
+├── foundry.toml
+└── README.md
 ```
 
-### Gas Snapshots
+---
 
-```shell
-$ forge snapshot
+# Local Development Setup
+
+## Install Foundry
+
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
 ```
 
-### Anvil
+## Clone Project
 
-```shell
-$ anvil
+```bash
+git clone https://github.com/YOUR_USERNAME/Foundry-Gold-Token.git
+cd Foundry-Gold-Token
 ```
 
-### Deploy
+## Install Dependencies
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```bash
+forge install
 ```
 
-### Cast
+---
 
-```shell
-$ cast <subcommand>
+# Run Local Blockchain
+
+Start Anvil:
+
+```bash
+anvil
 ```
 
-### Help
+Default RPC:
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```text
+http://127.0.0.1:8545
 ```
+
+Chain ID:
+
+```text
+31337
+```
+
+---
+
+# Compile Contracts
+
+```bash
+forge build
+```
+
+---
+
+# Run Tests
+
+```bash
+forge test
+```
+
+Verbose mode:
+
+```bash
+forge test -vv
+```
+
+---
+
+# Deploy to Local Anvil Chain
+
+```bash
+forge script script/DeployGold.s.sol:DeployGold \
+--rpc-url http://127.0.0.1:8545 \
+--private-key YOUR_ANVIL_PRIVATE_KEY \
+--broadcast
+```
+
+---
+
+# Mint Tokens from Terminal
+
+Example: mint 100 tokens
+
+```bash
+cast send CONTRACT_ADDRESS \
+"mint(address,uint256)" \
+YOUR_WALLET_ADDRESS \
+100000000000000000000 \
+--private-key YOUR_PRIVATE_KEY \
+--rpc-url http://127.0.0.1:8545
+```
+
+---
+
+# Example Tests Included
+
+* owner is set correctly
+* initial supply validation
+* owner-only minting
+* burn functionality
+* unauthorized mint prevention
+
+---
+
+# Future Improvements
+
+Planned upgrades:
+
+* staking contract
+* treasury system
+* vesting contract
+* DAO governance
+* token presale
+* crowdfunding module
+* advanced fuzz testing
+* invariant testing
+
+---
+
+# Security Notes
+
+This project uses OpenZeppelin Contracts for secure and battle-tested implementations.
+
+No hidden taxes, blacklist logic, or unsafe admin backdoors are included.
+
+---
+
+# License
+
+MIT
